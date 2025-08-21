@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🗳️ Système de Vote Blockchain</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-vote-yea"></i>
+                <h1>VoteChain</h1>
+            </div>
+            <div class="connection-status" id="connectionStatus">
+                <i class="fas fa-times-circle"></i>
+                <span>Non connecté</span>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Connection Section -->
+            <section class="card connection-card" id="connectionSection">
+                <h2><i class="fas fa-wallet"></i> Connexion MetaMask</h2>
+                <p>Connectez votre portefeuille MetaMask pour participer au vote</p>
+                <button class="btn btn-primary" id="connectWallet">
+                    <i class="fas fa-plug"></i>
+                    Connecter MetaMask
+                </button>
+            </section>
+
+            <!-- Voting Info Section -->
+            <section class="card info-card" id="votingInfo" style="display: none;">
+                <h2><i class="fas fa-info-circle"></i> Informations du Vote</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="label">Titre:</span>
+                        <span class="value" id="votingTitle">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Statut:</span>
+                        <span class="value status" id="votingStatus">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Total votes:</span>
+                        <span class="value" id="totalVotes">-</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">Votre statut:</span>
+                        <span class="value" id="voterStatus">-</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Admin Controls -->
+            <section class="card admin-card" id="adminControls" style="display: none;">
+                <h2><i class="fas fa-cog"></i> Contrôles Administrateur</h2>
+                <div class="admin-buttons">
+                    <button class="btn btn-success" id="startVoting">
+                        <i class="fas fa-play"></i>
+                        Démarrer le Vote
+                    </button>
+                    <button class="btn btn-danger" id="endVoting">
+                        <i class="fas fa-stop"></i>
+                        Terminer le Vote
+                    </button>
+                    <!-- ✨ NOUVEAU BOUTON RESET -->
+                    <button class="btn btn-warning" id="resetVoting" style="display: none;">
+                        <i class="fas fa-redo"></i>
+                        Nouveau Vote
+                    </button>
+                    <button class="btn btn-info" id="refreshData">
+                        <i class="fas fa-sync"></i>
+                        Actualiser
+                    </button>
+                </div>
+            </section>
+
+            <!-- Voting Section -->
+            <section class="card voting-card" id="votingSection" style="display: none;">
+                <h2><i class="fas fa-vote-yea"></i> Candidats</h2>
+                <div class="candidates-grid" id="candidatesGrid">
+                    <!-- Les candidats seront ajoutés dynamiquement -->
+                </div>
+                <button class="btn btn-primary btn-large" id="submitVote" style="display: none;">
+                    <i class="fas fa-check"></i>
+                    Confirmer mon Vote
+                </button>
+            </section>
+
+            <!-- Results Section -->
+            <section class="card results-card" id="resultsSection" style="display: none;">
+                <h2><i class="fas fa-chart-bar"></i> Résultats</h2>
+                <div class="results-container" id="resultsContainer">
+                    <!-- Les résultats seront affichés ici -->
+                </div>
+                <div class="winner-announcement" id="winnerAnnouncement" style="display: none;">
+                    <h3><i class="fas fa-crown"></i> Gagnant</h3>
+                    <div class="winner-info" id="winnerInfo"></div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Loading Overlay -->
+        <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+            <div class="loading-spinner">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p id="loadingText">Chargement...</p>
+            </div>
+        </div>
+
+        <!-- Toast Notifications -->
+        <div class="toast-container" id="toastContainer"></div>
+    </div>
+
+    <!-- Scripts - ORDRE IMPORTANT -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <script>
+        // Vérification du chargement d'ethers
+        if (typeof ethers === 'undefined') {
+            console.error('❌ Ethers.js n\'est pas chargé !');
+            document.body.innerHTML = '<div style="text-align: center; margin-top: 50px; color: red;"><h1>Erreur</h1><p>Impossible de charger la librairie ethers.js. Vérifiez votre connexion internet.</p></div>';
+        } else {
+            console.log('✅ Ethers.js chargé avec succès, version:', ethers.version);
+        }
+    </script>
+    <script src="contract-info.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
